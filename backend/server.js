@@ -35,16 +35,13 @@ const app = express()
 app.use(cors())
 app.use(express.json())
 
-// ── 3. Serve Static Frontend Files (Vite dist folder) ──
-app.use(express.static(path.join(__dirname, '../dist')))
-
 // ── Helper: map DB row → dish shape the frontend expects ──
 function mapDish(row, req) {
   const protocol = req && req.get('x-forwarded-proto') 
     ? req.get('x-forwarded-proto') 
     : (req ? req.protocol : 'https')
 
-  const host = req ? req.get('host') : 'daron-hotel-1.onrender.com'
+  const host = req ? req.get('host') : 'daron-hotel-backend.onrender.com'
   const baseUrl = `${protocol}://${host}`
 
   let imageUrl = ""
@@ -78,9 +75,9 @@ function mapDish(row, req) {
   }
 }
 
-// ════════ ROOT ROUTE & API HEALTH ════════
-app.get('/api', (req, res) => {
-  res.json({ message: 'Daron Hotel API is up and running!' });
+// ════════ ROOT ROUTE ════════
+app.get('/', (req, res) => {
+  res.send('Daron Hotel API is up and running!');
 });
 
 // ════════ CATEGORIES ════════
@@ -377,14 +374,13 @@ app.post('/api/admin/login', async (req, res) => {
   }
 })
 
-// ════════ SPA CATCH-ALL FALLBACK (MUST BE LAST ROUTE) ════════
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../dist/index.html'))
-})
-
 // ════════ START SERVER ════════
 
 const PORT = process.env.PORT || 4000
 app.listen(PORT, () => {
   console.log(`Daron Hotel API running on port ${PORT}`)
 })
+
+
+
+
