@@ -15,64 +15,77 @@ import AdminLogin from './admin/AdminLogin.jsx'
 
 import BottomNav from './components/BottomNav.jsx'
 import adminLogo from './assets/a.jpg'
-import profileLogo from './assets/a.jpg' // or './assets/a_3.jpg'
+import profileLogo from './assets/a.jpg'
 
-const API_BASE = import.meta.env.VITE_API_URL || 'https://daron-hotel-1.onrender.com'
+const API_BASE = import.meta.env.VITE_API_URL || 'https://daron-hotel-1.onrender.com'[cite: 2]
 
 // Helper function to extract dish ID regardless of database format (_id vs id)
-const getDishId = (item) => item?.id || item?._id
+const getDishId = (item) => item?.id || item?._id[cite: 2]
 
 export default function App() {
-  const navigate = useNavigate()
-  const location = useLocation()
+  const navigate = useNavigate()[cite: 2]
+  const location = useLocation()[cite: 2]
 
   // ADMIN STATE
-  const [adminPage, setAdminPage] = useState('dashboard')
+  const [adminPage, setAdminPage] = useState('dashboard')[cite: 2]
   const [adminLogged, setAdminLogged] = useState(
     Boolean(localStorage.getItem("admin"))
-  )
+  )[cite: 2]
 
-  const [selectedDish, setSelectedDish] = useState(null)
-  const [cart, setCart] = useState([])
-  const [dishes, setDishes] = useState([])
-  const [categories, setCategories] = useState([])
+  const [selectedDish, setSelectedDish] = useState(null)[cite: 2]
+  const [cart, setCart] = useState([])[cite: 2]
+  const [dishes, setDishes] = useState([])[cite: 2]
+  const [categories, setCategories] = useState([])[cite: 2]
 
   const loadDishes = async () => {
     try {
       const res = await fetch(`${API_BASE}/api/dishes`)
       const data = await res.json()
-      setDishes(data)
+      // Guard against non-array responses (e.g. { error: "..." })
+      if (Array.isArray(data)) {
+        setDishes(data)
+      } else {
+        console.error("Dishes response is not an array:", data)
+        setDishes([])
+      }
     } catch(err){
       console.error("Loading dishes failed:", err)
+      setDishes([])
     }
   }
 
   useEffect(() => {
     loadDishes()
-  }, [])
+  }, [])[cite: 2]
 
   useEffect(() => {
     fetch(`${API_BASE}/api/categories`)
       .then(res => res.json())
       .then(data => {
-        setCategories(data)
+        // Guard against non-array responses
+        if (Array.isArray(data)) {
+          setCategories(data)
+        } else {
+          console.error("Categories response is not an array:", data)
+          setCategories([])
+        }
       })
       .catch(err => {
         console.error("Category loading error:", err)
+        setCategories([])
       })
-  }, [])
+  }, [])[cite: 2]
 
-  // UPDATED: Use getDishId to handle MongoDB _id and local id seamlessly
   const addToCart = (dish) => {
-    if (dish.available === false) return
+    if (dish.available === false) return[cite: 2]
 
-    const targetId = getDishId(dish)
+    const targetId = getDishId(dish)[cite: 2]
 
     setCart(prev => {
-      const existing = prev.find(i => getDishId(i) === targetId)
+      const existing = prev.find(i => getDishId(i) === targetId)[cite: 2]
       if (existing) {
         return prev.map(i =>
-          getDishId(i) === targetId ? { ...i, qty: i.qty + 1 } : i
+          getDishId(i) === targetId ? { ...i, qty: i.qty + 1 } : i[cite: 2]
         )
       }
       return [
@@ -86,33 +99,33 @@ export default function App() {
           image: dish.image,
           qty: 1
         }
-      ]
+      ][cite: 2]
     })
   }
 
   const viewDish = (dish) => {
-    setSelectedDish(dish)
-    navigate('/detail')
+    setSelectedDish(dish)[cite: 2]
+    navigate('/detail')[cite: 2]
   }
 
   const handleNavigate = (tab) => {
-    if (tab === 'home') navigate('/')
-    else if (tab === 'menu') navigate('/menu')
-    else if (tab === 'favorites') navigate('/favorites')
-    else if (tab === 'cart') navigate('/cart')
-    else if (tab === 'profile') navigate('/profile')
+    if (tab === 'home') navigate('/')[cite: 2]
+    else if (tab === 'menu') navigate('/menu')[cite: 2]
+    else if (tab === 'favorites') navigate('/favorites')[cite: 2]
+    else if (tab === 'cart') navigate('/cart')[cite: 2]
+    else if (tab === 'profile') navigate('/profile')[cite: 2]
   }
 
-  const cartCount = cart.reduce((sum, item) => sum + item.qty, 0)
+  const cartCount = cart.reduce((sum, item) => sum + item.qty, 0)[cite: 2]
 
   const getActiveTab = () => {
-    const path = location.pathname
-    if (path === '/') return 'home'
-    if (path === '/menu') return 'menu'
-    if (path === '/favorites') return 'favorites'
-    if (path === '/cart') return 'cart'
-    if (path === '/profile') return 'profile'
-    return 'home'
+    const path = location.pathname[cite: 2]
+    if (path === '/') return 'home'[cite: 2]
+    if (path === '/menu') return 'menu'[cite: 2]
+    if (path === '/favorites') return 'favorites'[cite: 2]
+    if (path === '/cart') return 'cart'[cite: 2]
+    if (path === '/profile') return 'profile'[cite: 2]
+    return 'home'[cite: 2]
   }
 
   return (
@@ -131,7 +144,7 @@ export default function App() {
             onAdmin={() => navigate('/admin')}
           />
         }
-      />
+      />[cite: 2]
 
       <Route
         path="/menu"
@@ -146,7 +159,7 @@ export default function App() {
             cartCount={cartCount}
           />
         }
-      />
+      />[cite: 2]
 
       <Route
         path="/detail"
@@ -170,7 +183,7 @@ export default function App() {
             />
           )
         }
-      />
+      />[cite: 2]
 
       <Route
         path="/cart"
@@ -182,9 +195,8 @@ export default function App() {
             onCheckout={() => navigate('/checkout')}
           />
         }
-      />
+      />[cite: 2]
 
-      {/* UPDATED: Connected handler to clear cart upon order completion */}
       <Route
         path="/checkout"
         element={
@@ -197,7 +209,7 @@ export default function App() {
             }}
           />
         }
-      />
+      />[cite: 2]
 
       <Route
         path="/profile"
@@ -242,7 +254,7 @@ export default function App() {
             />
           </div>
         }
-      />
+      />[cite: 2]
 
       <Route
         path="/admin"
@@ -272,7 +284,7 @@ export default function App() {
             </AdminLayout>
           )
         }
-      />
+      />[cite: 2]
     </Routes>
   )
 }
