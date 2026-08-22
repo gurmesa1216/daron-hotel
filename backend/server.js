@@ -92,7 +92,8 @@ app.get('/api', (req, res) => {
   res.json({ message: "Daron Hotel API v1 is active", status: "OK" });
 });
 
-// ════════ SETUP CATEGORIES ROUTE ════════
+// ════════ SETUP CATEGORIES ROUTE (COMMENTED OUT) ════════
+/*
 app.get('/api/setup-categories', async (req, res) => {
   try {
     // Disable foreign key checks temporarily to wipe old categories safely
@@ -117,6 +118,7 @@ app.get('/api/setup-categories', async (req, res) => {
     res.status(500).json({ success: false, error: getErrorMessage(err) });
   }
 });
+*/
 
 // ════════ CATEGORIES ════════
 
