@@ -17,31 +17,30 @@ import BottomNav from './components/BottomNav.jsx'
 import adminLogo from './assets/a.jpg'
 import profileLogo from './assets/a.jpg'
 
-const API_BASE = import.meta.env.VITE_API_URL || 'https://daron-hotel-1.onrender.com'[cite: 2]
+const API_BASE = import.meta.env.VITE_API_URL || 'https://daron-hotel-1.onrender.com'
 
 // Helper function to extract dish ID regardless of database format (_id vs id)
-const getDishId = (item) => item?.id || item?._id[cite: 2]
+const getDishId = (item) => item?.id || item?._id
 
 export default function App() {
-  const navigate = useNavigate()[cite: 2]
-  const location = useLocation()[cite: 2]
+  const navigate = useNavigate()
+  const location = useLocation()
 
   // ADMIN STATE
-  const [adminPage, setAdminPage] = useState('dashboard')[cite: 2]
+  const [adminPage, setAdminPage] = useState('dashboard')
   const [adminLogged, setAdminLogged] = useState(
     Boolean(localStorage.getItem("admin"))
-  )[cite: 2]
+  )
 
-  const [selectedDish, setSelectedDish] = useState(null)[cite: 2]
-  const [cart, setCart] = useState([])[cite: 2]
-  const [dishes, setDishes] = useState([])[cite: 2]
-  const [categories, setCategories] = useState([])[cite: 2]
+  const [selectedDish, setSelectedDish] = useState(null)
+  const [cart, setCart] = useState([])
+  const [dishes, setDishes] = useState([])
+  const [categories, setCategories] = useState([])
 
   const loadDishes = async () => {
     try {
       const res = await fetch(`${API_BASE}/api/dishes`)
       const data = await res.json()
-      // Guard against non-array responses (e.g. { error: "..." })
       if (Array.isArray(data)) {
         setDishes(data)
       } else {
@@ -56,13 +55,12 @@ export default function App() {
 
   useEffect(() => {
     loadDishes()
-  }, [])[cite: 2]
+  }, [])
 
   useEffect(() => {
     fetch(`${API_BASE}/api/categories`)
       .then(res => res.json())
       .then(data => {
-        // Guard against non-array responses
         if (Array.isArray(data)) {
           setCategories(data)
         } else {
@@ -74,18 +72,18 @@ export default function App() {
         console.error("Category loading error:", err)
         setCategories([])
       })
-  }, [])[cite: 2]
+  }, [])
 
   const addToCart = (dish) => {
-    if (dish.available === false) return[cite: 2]
+    if (dish.available === false) return
 
-    const targetId = getDishId(dish)[cite: 2]
+    const targetId = getDishId(dish)
 
     setCart(prev => {
-      const existing = prev.find(i => getDishId(i) === targetId)[cite: 2]
+      const existing = prev.find(i => getDishId(i) === targetId)
       if (existing) {
         return prev.map(i =>
-          getDishId(i) === targetId ? { ...i, qty: i.qty + 1 } : i[cite: 2]
+          getDishId(i) === targetId ? { ...i, qty: i.qty + 1 } : i
         )
       }
       return [
@@ -99,33 +97,33 @@ export default function App() {
           image: dish.image,
           qty: 1
         }
-      ][cite: 2]
+      ]
     })
   }
 
   const viewDish = (dish) => {
-    setSelectedDish(dish)[cite: 2]
-    navigate('/detail')[cite: 2]
+    setSelectedDish(dish)
+    navigate('/detail')
   }
 
   const handleNavigate = (tab) => {
-    if (tab === 'home') navigate('/')[cite: 2]
-    else if (tab === 'menu') navigate('/menu')[cite: 2]
-    else if (tab === 'favorites') navigate('/favorites')[cite: 2]
-    else if (tab === 'cart') navigate('/cart')[cite: 2]
-    else if (tab === 'profile') navigate('/profile')[cite: 2]
+    if (tab === 'home') navigate('/')
+    else if (tab === 'menu') navigate('/menu')
+    else if (tab === 'favorites') navigate('/favorites')
+    else if (tab === 'cart') navigate('/cart')
+    else if (tab === 'profile') navigate('/profile')
   }
 
-  const cartCount = cart.reduce((sum, item) => sum + item.qty, 0)[cite: 2]
+  const cartCount = cart.reduce((sum, item) => sum + item.qty, 0)
 
   const getActiveTab = () => {
-    const path = location.pathname[cite: 2]
-    if (path === '/') return 'home'[cite: 2]
-    if (path === '/menu') return 'menu'[cite: 2]
-    if (path === '/favorites') return 'favorites'[cite: 2]
-    if (path === '/cart') return 'cart'[cite: 2]
-    if (path === '/profile') return 'profile'[cite: 2]
-    return 'home'[cite: 2]
+    const path = location.pathname
+    if (path === '/') return 'home'
+    if (path === '/menu') return 'menu'
+    if (path === '/favorites') return 'favorites'
+    if (path === '/cart') return 'cart'
+    if (path === '/profile') return 'profile'
+    return 'home'
   }
 
   return (
@@ -144,7 +142,7 @@ export default function App() {
             onAdmin={() => navigate('/admin')}
           />
         }
-      />[cite: 2]
+      />
 
       <Route
         path="/menu"
@@ -159,7 +157,7 @@ export default function App() {
             cartCount={cartCount}
           />
         }
-      />[cite: 2]
+      />
 
       <Route
         path="/detail"
@@ -183,7 +181,7 @@ export default function App() {
             />
           )
         }
-      />[cite: 2]
+      />
 
       <Route
         path="/cart"
@@ -195,7 +193,7 @@ export default function App() {
             onCheckout={() => navigate('/checkout')}
           />
         }
-      />[cite: 2]
+      />
 
       <Route
         path="/checkout"
@@ -209,7 +207,7 @@ export default function App() {
             }}
           />
         }
-      />[cite: 2]
+      />
 
       <Route
         path="/profile"
@@ -254,7 +252,7 @@ export default function App() {
             />
           </div>
         }
-      />[cite: 2]
+      />
 
       <Route
         path="/admin"
@@ -284,7 +282,7 @@ export default function App() {
             </AdminLayout>
           )
         }
-      />[cite: 2]
+      />
     </Routes>
   )
 }
