@@ -59,7 +59,7 @@ ${sidebarOpen?'admin-sidebar--open':''}`
 
 
 <span>
-🍽️
+
 </span>
 
 
