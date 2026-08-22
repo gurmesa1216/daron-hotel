@@ -13,17 +13,17 @@ export default function LanguageSwitcher() {
     {
       code: "en",
       label: "English",
-      flag: "🇬🇧"
+      
     },
     {
       code: "am",
       label: "አማርኛ",
-      flag: "🇪🇹"
+      
     },
     {
       code: "om",
       label: "Afaan Oromo",
-      flag: "🌿"
+      
     }
   ];
 
