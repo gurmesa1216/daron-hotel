@@ -66,7 +66,7 @@ function mapDish(row, req) {
   return {
     id: row.id,
     name: row.name,
-    category: row.category_name || 'traditional',
+    category: row.category_name || 'Nyaata/ምግብ',
     categoryId: row.category_id,
     price: Number(row.price),
     portion: row.portion,
@@ -90,6 +90,32 @@ app.get('/', (req, res) => {
 
 app.get('/api', (req, res) => {
   res.json({ message: "Daron Hotel API v1 is active", status: "OK" });
+});
+
+// ════════ SETUP CATEGORIES ROUTE ════════
+app.get('/api/setup-categories', async (req, res) => {
+  try {
+    // Disable foreign key checks temporarily to wipe old categories safely
+    await pool.query('SET FOREIGN_KEY_CHECKS = 0;');
+    await pool.query('TRUNCATE TABLE categories;');
+    await pool.query('SET FOREIGN_KEY_CHECKS = 1;');
+
+    const newCategories = [
+      'Nyaata/ምግብ',
+      'Kansoomanaa/የጾም',
+      'Dhugaatii/መጠጥ',
+      'Dhugaatii Lallaafaa/ለስላሳ መጠጦች'
+    ];
+
+    for (const name of newCategories) {
+      await pool.query('INSERT INTO categories (name) VALUES (?)', [name]);
+    }
+
+    res.json({ success: true, message: 'Database updated with new categories successfully!' });
+  } catch (err) {
+    console.error("Setup Categories Error:", err);
+    res.status(500).json({ success: false, error: getErrorMessage(err) });
+  }
 });
 
 // ════════ CATEGORIES ════════
