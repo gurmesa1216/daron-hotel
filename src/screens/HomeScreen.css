@@ -303,12 +303,29 @@
 }
 .chip__icon {
   font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+
+/* Category Accent Icon Colors */
+.chip__icon .icon-fasting { color: #0b6b3a; }
+.chip__icon .icon-hot-drink { color: #f2b705; }
+.chip__icon .icon-soft-drink { color: #2563eb; }
+
 .chip--active {
   background: var(--green);
   color: #fff;
   border-color: var(--green);
   box-shadow: 0 4px 12px rgba(11, 107, 58, 0.25);
+}
+
+/* Override icon colors to white on active chip */
+.chip--active .chip__icon svg,
+.chip--active .chip__icon .icon-fasting,
+.chip--active .chip__icon .icon-hot-drink,
+.chip--active .chip__icon .icon-soft-drink {
+  color: #ffffff !important;
 }
 
 /* Dish grid */

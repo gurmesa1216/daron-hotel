@@ -4,9 +4,31 @@ import { useLanguage } from "../i18n/LanguageContext"
 import LanguageSwitcher from "../components/LanguageSwitcher.jsx"
 import DishCard from '../components/DishCard.jsx'
 import BottomNav from '../components/BottomNav.jsx'
+import { Utensils, Leaf, Coffee, Wine, Grid } from 'lucide-react'
 
 // 1. Import your logo image
-import logoImg from '../assets/a.jpg' // Adjust path if stored elsewhere (e.g. '../assets/a.jpg')
+import logoImg from '../assets/a.jpg' // Adjust path if stored elsewhere (e.g. '../assets/a.jpg')[cite: 6]
+
+// Helper function to dynamically select icons based on category name
+const getCategoryIcon = (categoryName) => {
+  if (!categoryName) return <Grid size={18} />;
+  const name = categoryName.toLowerCase();
+
+  if (name.includes('nyaata') || name.includes('ምግብ')) {
+    return <Utensils size={18} />;
+  }
+  if (name.includes('kansoomanaa') || name.includes('የጾም')) {
+    return <Leaf size={18} className="icon-fasting" />;
+  }
+  if (name.includes('dhugaatii lallaafaa') || name.includes('ለስላሳ')) {
+    return <Wine size={18} className="icon-soft-drink" />;
+  }
+  if (name.includes('dhugaatii') || name.includes('መጠጥ')) {
+    return <Coffee size={18} className="icon-hot-drink" />;
+  }
+
+  return <Grid size={18} />;
+};
 
 export default function HomeScreen({
   dishes = [],
@@ -52,7 +74,7 @@ export default function HomeScreen({
               <span className="home-hero__delivery-label">Daron Hotel</span>
               <span className="home-hero__city">
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" style={{ marginRight: 3 }}>
-                  <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
+                  <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5-2.5z" />
                 </svg>
                 Dukem
               </span>
@@ -126,7 +148,7 @@ export default function HomeScreen({
                 className={`chip${activeCategory === cat.name ? ' chip--active' : ''}`}
                 onClick={() => setActiveCategory(cat.name)}
               >
-                <span className="chip__icon">{cat.icon}</span>
+                <span className="chip__icon">{getCategoryIcon(cat.name)}</span>
                 <span className="chip__label">{cat.name}</span>
               </button>
             ))}
