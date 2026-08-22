@@ -4,31 +4,9 @@ import { useLanguage } from "../i18n/LanguageContext"
 import LanguageSwitcher from "../components/LanguageSwitcher.jsx"
 import DishCard from '../components/DishCard.jsx'
 import BottomNav from '../components/BottomNav.jsx'
-import { Utensils, Leaf, Coffee, Wine, Grid } from 'lucide-react'
 
 // 1. Import your logo image
-import logoImg from '../assets/a.jpg' // Adjust path if stored elsewhere (e.g. '../assets/a.jpg')[cite: 6]
-
-// Helper function to dynamically select icons based on category name
-const getCategoryIcon = (categoryName) => {
-  if (!categoryName) return <Grid size={18} />;
-  const name = categoryName.toLowerCase();
-
-  if (name.includes('nyaata') || name.includes('ምግብ')) {
-    return <Utensils size={18} />;
-  }
-  if (name.includes('kansoomanaa') || name.includes('የጾም')) {
-    return <Leaf size={18} className="icon-fasting" />;
-  }
-  if (name.includes('dhugaatii lallaafaa') || name.includes('ለስላሳ')) {
-    return <Wine size={18} className="icon-soft-drink" />;
-  }
-  if (name.includes('dhugaatii') || name.includes('መጠጥ')) {
-    return <Coffee size={18} className="icon-hot-drink" />;
-  }
-
-  return <Grid size={18} />;
-};
+import logoImg from '../assets/a.jpg' // Adjust path if stored elsewhere (e.g. '../assets/a.jpg')
 
 export default function HomeScreen({
   dishes = [],
@@ -148,7 +126,6 @@ export default function HomeScreen({
                 className={`chip${activeCategory === cat.name ? ' chip--active' : ''}`}
                 onClick={() => setActiveCategory(cat.name)}
               >
-                <span className="chip__icon">{getCategoryIcon(cat.name)}</span>
                 <span className="chip__label">{cat.name}</span>
               </button>
             ))}
@@ -164,7 +141,7 @@ export default function HomeScreen({
 
           {filtered.length === 0 ? (
             <div className="empty-state">
-              <span className="empty-state__icon"></span>
+              <span className="empty-state__icon">🍽️</span>
               <p>{t("noDishes")}</p>
             </div>
           ) : (
