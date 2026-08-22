@@ -180,7 +180,7 @@ export default function MenuScreen({
 
           {filtered.length === 0 ? (
             <div className="empty-state">
-              <span className="empty-state__icon">🍽️</span>
+              <span className="empty-state__icon"></span>
               <p>{t("noDishes")}</p>
             </div>
           ) : (
