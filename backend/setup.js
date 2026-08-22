@@ -9,7 +9,7 @@ async function seedDB() {
       CREATE TABLE IF NOT EXISTS categories (
         id INT AUTO_INCREMENT PRIMARY KEY,
         name VARCHAR(255) NOT NULL,
-        icon VARCHAR(50) DEFAULT '🍽️'
+        icon VARCHAR(50) DEFAULT ''
       );
     `);
 
