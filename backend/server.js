@@ -92,6 +92,18 @@ app.get('/api', (req, res) => {
   res.json({ message: "Daron Hotel API v1 is active", status: "OK" });
 });
 
+// Health check endpoint for UptimeRobot
+app.get('/api/health', async (req, res) => {
+  try {
+    // Ping MySQL connection to verify DB health
+    await pool.query('SELECT 1');
+    res.status(200).json({ status: "ok", message: "Server and database are healthy!" });
+  } catch (err) {
+    console.error("Health check error:", err);
+    res.status(500).json({ status: "error", error: getErrorMessage(err) });
+  }
+});
+
 // ════════ SETUP CATEGORIES ROUTE (COMMENTED OUT) ════════
 /*
 app.get('/api/setup-categories', async (req, res) => {
@@ -430,9 +442,4 @@ app.post('/api/admin/login', async (req, res) => {
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
   console.log(`Daron Hotel API running on port ${PORT}`);
-});
-
-// Example health check endpoint
-app.get('/api/health', (req, res) => {
-  res.status(200).send('OK');
 });
