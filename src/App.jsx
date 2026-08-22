@@ -277,7 +277,7 @@ export default function App() {
             >
               {adminPage === 'dashboard' && <AdminDashboard />}
               {adminPage === "menu" && (
-                <MenuManager refreshDishes={loadDishes} />
+                <MenuManager refreshDishes={loadDishes} categories={categories} />
               )}
             </AdminLayout>
           )

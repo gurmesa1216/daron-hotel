@@ -3,7 +3,14 @@ import './AdminScreen.css'
 import Button from '../components/Button.jsx'
 import logo from '../assets/a_2.jpg'
 
-export default function AdminScreen({ dishes, setDishes, orders, setOrders, onBack }) {
+export default function AdminScreen({
+  dishes,
+  setDishes,
+  orders,
+  setOrders,
+  onBack,
+  categories = []
+}) {
   const [tab, setTab] = useState('dishes')
   const [modal, setModal] = useState(null) // 'add' | 'edit' | null
   const [editingDish, setEditingDish] = useState(null)
@@ -221,6 +228,7 @@ export default function AdminScreen({ dishes, setDishes, orders, setOrders, onBa
       {modal && (
         <DishFormModal
           dish={editingDish}
+          categories={categories}
           onClose={() => { setModal(null); setEditingDish(null) }}
           onSave={handleSaveDish}
         />
@@ -229,11 +237,13 @@ export default function AdminScreen({ dishes, setDishes, orders, setOrders, onBa
   )
 }
 
-function DishFormModal({ dish, onClose, onSave }) {
+function DishFormModal({ dish, categories = [], onClose, onSave }) {
+  const defaultCategory = categories[0]?.id || categories[0]?.name || 'traditional'
+
   const [form, setForm] = useState(
     dish || {
       name: '',
-      category: 'traditional',
+      category: defaultCategory,
       price: 0,
       portion: '',
       image: '',
@@ -338,11 +348,25 @@ function DishFormModal({ dish, onClose, onSave }) {
                 value={form.category}
                 onChange={(e) => handleChange('category', e.target.value)}
               >
-                <option value="traditional">Traditional</option>
-                <option value="vegan">Vegan (Fasting)</option>
-                <option value="grilled">Grilled (Tibs)</option>
-                <option value="drinks">Coffee &amp; Drinks</option>
-                <option value="desserts">Desserts</option>
+                {categories.length > 0 ? (
+                  categories.map((cat) => {
+                    const catVal = cat.id || cat.name || cat
+                    const catName = cat.name || cat
+                    return (
+                      <option key={catVal} value={catVal}>
+                        {catName}
+                      </option>
+                    )
+                  })
+                ) : (
+                  <>
+                    <option value="traditional">Traditional</option>
+                    <option value="vegan">Vegan (Fasting)</option>
+                    <option value="grilled">Grilled (Tibs)</option>
+                    <option value="drinks">Coffee &amp; Drinks</option>
+                    <option value="desserts">Desserts</option>
+                  </>
+                )}
               </select>
             </div>
 

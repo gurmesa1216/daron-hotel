@@ -4,7 +4,7 @@ import DishForm from "./DishForm.jsx";
 import "./MenuManager.css";
 
 
-export default function MenuManager({refreshDishes}){
+export default function MenuManager({refreshDishes, categories = []}){
 
 
 const [dishes,setDishes]=useState([]);
@@ -234,6 +234,8 @@ onClick={()=>setShowForm(true)}
 {
 showForm &&
 <DishForm
+
+categories={categories}
 
 onClose={()=>
 setShowForm(false)
