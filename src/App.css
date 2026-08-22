@@ -156,3 +156,218 @@
     gap: 24px;
   }
 }  
+
+/* ═══════════════════════════════════════════════════════
+   Habesha Bites — App.css (global tokens + shared only)
+   Component-specific styles live in their own .css files.
+   ═══════════════════════════════════════════════════════ */
+
+:root {
+  --green: #0B6B3A;
+  --green-dark: #094D2A;
+  --green-light: #E6F2EC;
+  --gold: #F2B705;
+  --gold-light: #FFF3D0;
+  --terracotta: #C4432B;
+  --terracotta-light: #FBE7E2;
+  --offwhite: #FBF8F2;
+  --charcoal: #1C1B18;
+  --charcoal-soft: #2A2823;
+  --ink: #1C1B18;
+  --ink-soft: #6B6862;
+  --line: #ECE7DE;
+  --shadow-sm: 0 2px 8px rgba(28, 27, 24, 0.06);
+  --shadow-md: 0 6px 18px rgba(28, 27, 24, 0.08);
+  --shadow-lg: 0 12px 32px rgba(28, 27, 24, 0.12);
+  --radius-sm: 12px;
+  --radius: 16px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+}
+/* =====================================
+   PROFILE SCREEN (RESPONSIVE REBUILD)
+===================================== */
+
+.profile-screen {
+  width: 100%;
+  max-width: 1000px; /* Expanded max-width for desktop view */
+  margin: 0 auto;
+  min-height: 100vh;
+  background: #f8f6f2;
+  padding-bottom: 100px;
+  box-sizing: border-box;
+}
+
+/* Header Banner */
+.profile-header {
+  background: linear-gradient(135deg, #0b6b3a, #149456);
+  padding: 48px 24px 38px;
+  border-radius: 0 0 35px 35px;
+  text-align: center;
+  color: white;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.profile-avatar {
+  width: 110px;
+  height: 110px;
+  margin: 0 auto;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 4px solid white;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.profile-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profile-header h2 {
+  margin-top: 16px;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+/* Options Grid */
+.profile-card {
+  margin: 32px auto;
+  padding: 0 20px;
+  display: grid;
+  grid-template-columns: 1fr; /* Mobile: 1 column */
+  gap: 16px;
+  box-sizing: border-box;
+}
+
+/* Action Items */
+.profile-item {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  background: white;
+  border: 1px solid #eaeaea;
+  border-radius: 20px;
+  padding: 20px;
+  cursor: pointer;
+  text-align: left;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.04);
+  transition: all 0.25s ease;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.profile-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+  border-color: #0b6b3a;
+}
+
+.profile-item span {
+  width: 54px;
+  height: 54px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #e6f2ec;
+  color: #0b6b3a;
+  border-radius: 16px;
+  font-size: 24px;
+  flex-shrink: 0;
+}
+
+.profile-item h4 {
+  margin: 0;
+  font-size: 18px;
+  color: #222;
+  font-weight: 600;
+}
+
+.profile-item p {
+  margin: 4px 0 0;
+  font-size: 14px;
+  color: #666;
+}
+
+/* ── Tablet View (600px+) ── */
+@media (min-width: 600px) {
+  .profile-card {
+    grid-template-columns: repeat(2, 1fr); /* 2 Columns for tablets */
+    gap: 20px;
+    padding: 0 32px;
+  }
+}
+
+/* ── Desktop View (1024px+) ── */
+@media (min-width: 1024px) {
+  .profile-screen {
+    padding-top: 20px;
+  }
+
+  .profile-header {
+    border-radius: 28px;
+    margin: 0 32px;
+    padding: 40px 20px;
+  }
+
+  .profile-card {
+    grid-template-columns: repeat(3, 1fr); /* 3 Columns for widescreen */
+    gap: 24px;
+  }
+}
+
+/* ==========================================================================
+   Category-Specific Accent Styles
+   ========================================================================== */
+
+/* 1. Main Food Category (Nyaata/ምግብ) */
+.category-btn[data-category="Nyaata/ምግብ"],
+.category-tag.nyaata {
+  border-left: 3px solid #C4432B; /* Terracotta Red */
+}
+
+.category-btn[data-category="Nyaata/ምግብ"].active {
+  background: linear-gradient(135deg, #C4432B 0%, #A0321E 100%);
+  color: #ffffff;
+  border-color: #C4432B;
+  box-shadow: 0 4px 12px rgba(196, 67, 43, 0.35);
+}
+
+/* 2. Fasting Category (Kansoomanaa/የጾም) */
+.category-btn[data-category="Kansoomanaa/የጾም"],
+.category-tag.kansoomanaa {
+  border-left: 3px solid #0B6B3A; /* Habesha Green */
+}
+
+.category-btn[data-category="Kansoomanaa/የጾም"].active {
+  background: linear-gradient(135deg, #0B6B3A 0%, #094D2A 100%);
+  color: #ffffff;
+  border-color: #0B6B3A;
+  box-shadow: 0 4px 12px rgba(11, 107, 58, 0.35);
+}
+
+/* 3. Hot Drinks Category (Dhugaatii/መጠጥ) */
+.category-btn[data-category="Dhugaatii/መጠጥ"],
+.category-tag.dhugaatii {
+  border-left: 3px solid #F2B705; /* Warm Gold */
+}
+
+.category-btn[data-category="Dhugaatii/መጠጥ"].active {
+  background: linear-gradient(135deg, #F2B705 0%, #D4A004 100%);
+  color: #1C1B18;
+  border-color: #F2B705;
+  box-shadow: 0 4px 12px rgba(242, 183, 5, 0.35);
+}
+
+/* 4. Soft Drinks Category (Dhugaatii Lallaafaa/ለስላሳ መጠጦች) */
+.category-btn[data-category="Dhugaatii Lallaafaa/ለስላሳ መጠጦች"],
+.category-tag.dhugaatii-lallaafaa {
+  border-left: 3px solid #2563EB; /* Refreshing Blue */
+}
+
+.category-btn[data-category="Dhugaatii Lallaafaa/ለስላሳ መጠጦች"].active {
+  background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%);
+  color: #ffffff;
+  border-color: #2563EB;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.35);
+}
